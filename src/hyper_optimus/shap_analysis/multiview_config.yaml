@@ -1,0 +1,137 @@
+# 多视图流量分类模型 SHAP 分析配置
+# 支持: flow_bert_multiview, ssl, ssl_mlm, ssl_seq2stat
+
+# 基础配置
+shap:
+  enabled: true
+  num_background_samples: 50
+  max_evals: 500
+  
+  # 输出配置
+  save_plots: true
+  save_detailed_results: true
+  
+  # 分析配置
+  enable_data_validation: true
+  enable_score_rebalancing: true
+  enabled_strategies: ['numeric', 'sequence', 'text', 'categorical']
+
+# 模型特定配置
+models:
+  # 基础多视图模型
+  flow_bert_multiview:
+    feature_patterns:
+      numeric: ['numeric_features', 'domain_embedding_features', 'flowmeter\\.']
+      sequence: ['iat_times', 'payload_sizes', 'sequence_']
+      text: ['ssl_server_name', 'dns_query', 'cert0_subject', 'cert0_issuer']
+      exclude: ['sequence_mask', 'is_malicious_labels', 'idx', 'uid', 'combined_text']
+    decompose_combined_text: true
+    text_extraction_patterns:
+      ssl_server_name: ['domain_name', 'server_name', 'host']
+      dns_query: ['query', 'dns', 'domain']
+      cert0_subject: ['CN=', 'subject', 'O=', 'OU=']
+      cert0_issuer: ['CA', 'issuer', 'Authority', 'C=']
+
+  # SSL模型
+  ssl:
+    feature_patterns:
+      numeric: ['numeric_features', 'domain_embedding_features', 'ssl_features', 'reconstruction_']
+      sequence: ['iat_times', 'payload_sizes', 'sequence_', 'ssl_sequence']
+      text: ['ssl_server_name', 'dns_query', 'cert0_subject', 'cert0_issuer']
+      exclude: ['sequence_mask', 'is_malicious_labels', 'idx', 'uid', 'ssl_mask', 'combined_text']
+    decompose_combined_text: true
+    text_extraction_patterns:
+      ssl_server_name: ['domain_name', 'server_name', 'host']
+      dns_query: ['query', 'dns', 'domain']
+      cert0_subject: ['CN=', 'subject', 'O=', 'OU=']
+      cert0_issuer: ['CA', 'issuer', 'Authority', 'C=']
+
+  # SSL MLM模型
+  ssl_mlm:
+    feature_patterns:
+      numeric: ['numeric_features', 'domain_embedding_features', 'mlm_features', 'reconstruction_']
+      sequence: ['iat_times', 'payload_sizes', 'sequence_', 'mlm_sequence', 'masked_sequence']
+      text: ['ssl_server_name', 'dns_query', 'cert0_subject', 'cert0_issuer', 'masked_text']
+      exclude: ['sequence_mask', 'is_malicious_labels', 'idx', 'uid', 'mlm_mask', 'sequence_mlm_mask', 'combined_text']
+    decompose_combined_text: true
+    text_extraction_patterns:
+      ssl_server_name: ['domain_name', 'server_name', 'host']
+      dns_query: ['query', 'dns', 'domain']
+      cert0_subject: ['CN=', 'subject', 'O=', 'OU=']
+      cert0_issuer: ['CA', 'issuer', 'Authority', 'C=']
+
+  # SSL Seq2Stat模型
+  ssl_seq2stat:
+    feature_patterns:
+      numeric: ['numeric_features', 'domain_embedding_features', 'seq2stat_features', 'statistical_features', 'reconstruction_']
+      sequence: ['iat_times', 'payload_sizes', 'sequence_', 'seq2stat_sequence', 'statistical_sequence']
+      text: ['ssl_server_name', 'dns_query', 'cert0_subject', 'cert0_issuer']
+      exclude: ['sequence_mask', 'is_malicious_labels', 'idx', 'uid', 'seq2stat_mask', 'combined_text']
+    decompose_combined_text: true
+    text_extraction_patterns:
+      ssl_server_name: ['domain_name', 'server_name', 'host']
+      dns_query: ['query', 'dns', 'domain']
+      cert0_subject: ['CN=', 'subject', 'O=', 'OU=']
+      cert0_issuer: ['CA', 'issuer', 'Authority', 'C=']
+
+# 通用特征处理配置
+feature_processing:
+  # 文本特征分解配置
+  combined_text:
+    enabled: true
+    heuristic_rules:
+      domain_pattern: r'[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}'
+      ssl_cert_pattern: r'CN=|O=|OU=|C='
+      dns_query_pattern: r'www\.|^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}'
+    
+  # 分类特征排除规则
+  categorical_exclusion:
+    keywords: ['idx', 'uid', 'mask', 'labels', 'target', 'split', 'enabled']
+    patterns: ['.*_mask$', '.*_label$', '.*_id$', 'sequence_.*']
+    data_types: ['torch.long']
+
+# 评分重新平衡配置
+score_rebalancing:
+  enabled: true
+  feature_type_weights:
+    numeric: 1.0
+    sequence: 1.0
+    text: 0.2  # 降低文本特征的权重
+    categorical: 0.1
+  
+  normalization:
+    internal_method: 'min_max'
+    cross_type_method: 'z_score_0_100'
+    min_max_clip: True
+    z_score_clip_std: 3.0
+
+# 数据质量验证配置
+data_validation:
+  enabled: true
+  checks:
+    missing_values: true
+    infinite_values: true
+    nan_values: true
+    zero_variance: true
+    extreme_outliers: true
+  
+  outlier_detection:
+    iqr_factor: 1.5
+    z_score_threshold: 3.0
+    extreme_value_threshold: 1000.0
+
+# 输出配置
+output:
+  base_dir: "./shap_results"
+  create_timestamp_dirs: true
+  
+  plots:
+    formats: ['png', 'pdf']
+    dpi: 300
+    figsize: [12, 8]
+    
+  results:
+    format: 'json'
+    pretty_print: true
+    include_metadata: true
+    include_validation: true

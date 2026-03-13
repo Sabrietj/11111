@@ -1,0 +1,139 @@
+# 基础通用类的配置,后续需要通过Hydra动态加载, 传递给各个模型 train.py
+
+data:
+  # 数据集路径配置 (使用锚点避免重复定义) 兼容 各个模型的配置文件格式(采用平铺的方式)
+  # data_path:  "/data/qinyf/code-multiview-network-traffic-classification-model/processed_data/CIC-IDS-2017/all_embedded_flow.csv"
+  # session_split_path: "/data/qinyf/code-multiview-network-traffic-classification-model/processed_data/CIC-IDS-2017/all_split_session.csv"
+  
+  data_path:  "/data/qinyf/code-multiview-network-traffic-classification-model/processed_data/CIC-IDS-2017-test/all_embedded_flow.csv"
+  session_split_path: "/data/qinyf/code-multiview-network-traffic-classification-model/processed_data/CIC-IDS-2017-test/all_split_session.csv"
+  
+  # 会话划分文件路径配置
+
+  batch_size:  1024  # 根据
+  num_workers:  4
+
+training:
+  # max_epochs: 30 # 如果是跑ablation，可以调低用于测试
+  # patience: 8
+
+  max_epochs: 1 # 如果是跑ablation，可以调低用于测试
+  patience: 2
+
+  
+  # 日志配置 - 控制训练日志的输出频率
+  log_every_n_steps: 10  # 每隔多少个batch记录一次训练日志
+  flush_logs_every_n_steps: 10  # 每隔多少个batch刷新一次日志到文件
+  val_check_interval: 1.0  # 验证间隔（1.0表示每个epoch验证一次）
+
+# 进度条和显示配置
+display:
+  enable_progress_bar: false  # 完全禁用进度条显示
+  enable_model_summary: false  # 禁用模型总结输出
+  progress_bar_refresh_rate: 0  # 进度条刷新频率（0表示不刷新）
+
+experiment:
+  # model_name: flow_bert_multiview        # 模型名称, 到对应的模型目录下(models),找到对应的config.yaml,数据处理脚本,训练脚本(train.py)
+  # ablation_strategy: "full"               # 消融策略: standard(仅基线), full(全部使能实验), selective(选择性)
+  # enable:                                 # 实验配置, 实验类型使能开关
+  #   feature_ablation: true                # 实验配置, 是否开启特征消融 
+  #   fusion_ablation: false                 # 实验配置, 是否开启融合消融
+  #   loss_ablation:   false                 # 实验配置, 是否开启损失消融
+
+  # model_name: flow_autoencoder            # 模型名称, 到对应的模型目录下(models),找到对应的config.yaml,数据处理脚本,训练脚本(train.py)
+  # ablation_strategy: "standard"                        # 实验类型, ablation, hyperopt, standard
+
+  model_name: flow_bert_multiview            # 模型名称, 到对应的模型目录下(models),找到对应的config.yaml,数据处理脚本,训练脚本(train.py)
+  # model_name: flow_bert_multiview_ssl            # 模型名称, 到对应的模型目录下(models),找到对应的config.yaml,数据处理脚本,训练脚本(train.py)
+  # model_name: flow_bert_multiview_ssl_mlm            # 模型名称, 到对应的模型目录下(models),找到对应的config.yaml,数据处理脚本,训练脚本(train.py)
+  # model_name: flow_bert_multiview_ssl_mlm_seq2stat            # 模型名称, 到对应的模型目录下(models),找到对应的config.yaml,数据处理脚本,训练脚本(train.py)
+  ablation_strategy: "standard"              # 实验类型, ablation, hyperopt, standard
+
+ablation_variants:
+  # Feature combination ablation (FT1-FT4)
+
+  FT1:
+    name: "all_features"
+    description: "complete_multiview_flow_model"
+    type: "feature_ablation"
+    config:
+      enabled_features:
+        sequence_features: true
+        domain_name_embedding_features: true
+        text_features: true
+    baseline: true  # Mark as baseline experiment
+
+  FT2:
+    name: "no_sequence"
+    description: "numerical_features_removed"
+    type: "feature_ablation"
+    config:
+      enabled_features:
+        sequence_features: false
+        domain_name_embedding_features: true
+        text_features: true
+      
+  FT3:
+    name: "no_domain"
+    description: "domain_name_embedding_features_removed"
+    type: "feature_ablation"
+    config:
+      enabled_features:
+        sequence_features: true
+        domain_name_embedding_features: false
+        text_features: true
+        
+  FT4:
+    name: "no_text"
+    description: "text_features_removed"
+    type: "feature_ablation"
+    config:
+      enabled_features:
+        sequence_features: true
+        domain_name_embedding_features: true
+        text_features: false
+        
+
+  FU1:
+    name: "concat"
+    description: "multiview_concatenation_fusion"
+    type: "fusion_ablation"
+    method: "concat"  # Options: "concat", "cross_attention", "weighted_sum"
+
+  FU2:
+    name: "cross_attention"
+    description: "multiview_cross_attention_fusion"
+    type: "fusion_ablation"
+    method: "cross_attention"  # Options: "concat", "cross_attention", "weighted_sum"
+
+  # FU3:
+  #   name: "weighted_sum"
+  #   description: "multiview_weighted_sum_fusion"
+  #   type: "fusion_ablation"
+  #   method: "weighted_sum"  # Options: "concat", "cross_attention", "weighted_sum"
+
+  LS1:
+    name: "prediction_loss"
+    description: "multiview_prediction_loss_only"
+    type: "loss_ablation"
+    model_name: "flow_bert_multiview"     # Model name, find corresponding config.yaml in models directory
+
+
+  LS2:
+    name: "numerical_features_ssl"
+    description: "prediction_loss_with_numerical_features_reconstruction"
+    type: "loss_ablation"
+    model_name: "flow_bert_multiview_ssl"  # Model name, find corresponding config.yaml in models directory
+
+
+  LS3:
+    name: "packet_sequence_ssl_mlm"
+    description: "prediction_loss_with_numerical_features_and_packet_sequence_mlm_ssl"
+    type: "loss_ablation"
+    model_name: "flow_bert_multiview_ssl_mlm"  # Model name, find corresponding config.yaml in models directory
+  
+  LS4:
+      name: "packet_sequence_ssl_mlm_seq2stat"
+      description: "prediction_loss_with_numerical_features_and_packet_sequence_mlm_ssl"
+      type: "loss_ablation"
+      model_name: "flow_bert_multiview_ssl_mlm"  # Model name, find corresponding config.yaml in models directory

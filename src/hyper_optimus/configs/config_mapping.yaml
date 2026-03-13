@@ -1,0 +1,113 @@
+# 通用配置映射表
+# 
+# 这个文件定义了实验配置(exp_config.yaml)到模型配置的映射关系
+# 支持按模型名称定制不同的映射路径
+#
+# 映射规则：
+# - 首先查找模型特定的映射
+# - 其次使用 default 映射
+# - 最后使用原始路径（记录警告）
+#
+# 使用示例：
+# 'exp_config.path': {
+#     'model_a': 'model_a.config.path',    # 模型特定映射
+#     'model_b': 'model_b.config.path',    # 模型特定映射
+#     'default': 'general.config.path'     # 默认映射
+# }
+
+# 数据配置映射
+data:
+  # 数据文件路径映射
+  data_path:
+    flow_bert_multiview: "data.flow_data_path"
+    flow_bert_multiview_ssl: "data.flow_data_path"
+    flow_bert_multiview_ssl_mlm: "data.flow_data_path"
+    flow_autoencoder: "data.data_path"
+    default: "data.data_path"
+  
+  # 会话划分文件路径映射
+  session_split_path:
+    default: "data.session_split.session_split_path"
+  
+  # 批处理配置（通用）
+  batch_size:
+    default: "data.batch_size"
+  
+  num_workers:
+    default: "data.num_workers"
+
+# 训练配置映射
+training:
+  # 训练轮数
+  max_epochs:
+    default: "training.max_epochs"
+  
+  # 日志配置
+  log_every_n_steps:
+    default: "training.log_every_n_steps"
+  
+  # flush_logs_every_n_steps:
+  #   flow_bert_multiview: "training.flush_logs_every_n_steps"
+  #   flow_bert_multiview_ssl: "training.flush_logs_every_n_steps"
+  #   default: "training.flush_logs_every_n_steps"
+  
+  # val_check_interval:
+  #   flow_bert_multiview: "training.val_check_interval"
+  #   flow_bert_multiview_ssl: "training.val_check_interval"
+  #   default: "training.val_check_interval"
+  
+  # 早停耐心值
+  patience:
+    flow_bert_multiview: "training.early_stopping.patience"
+    flow_bert_multiview_ssl: "training.early_stopping.patience"
+    flow_bert_multiview_ssl_mlm: "training.early_stopping.patience"
+    default: "training.patience"
+  
+  # 优化器配置（可扩展）
+  learning_rate:
+    flow_bert_multiview: "optimizer.lr"
+    flow_bert_multiview_ssl: "optimizer.lr"
+    flow_bert_multiview_ssl_mlm: "optimizer.lr"
+    default: "training.learning_rate"
+  
+  weight_decay:
+    flow_bert_multiview: "training.optimizer.weight_decay"
+    flow_bert_multiview_ssl: "training.optimizer.weight_decay"
+    flow_bert_multiview_ssl_mlm: "training.optimizer.weight_decay"
+    default: "training.weight_decay"
+
+# 模型配置映射（可扩展）
+model:
+  # 隐藏层维度
+  hidden_dim:
+    flow_bert_multiview: "model.encoder.hidden_dim"
+    flow_autoencoder: "model.hidden_dim"
+    default: "model.hidden_dim"
+  
+# 多视图配置映射
+multiview:
+  # 特征配置
+  sequence_features:
+    default: "data.sequence_features"
+  
+  domain_name_embedding_features:
+    default: "data.domain_name_embedding_features"
+  
+  text_features:
+    default: "data.text_features"
+
+# 融合方法配置映射
+fusion:
+  method:
+    default: "multiview.fusion.method"
+
+# 显示配置映射
+display:
+  enable_progress_bar:
+    default: "display.enable_progress_bar"
+  
+  enable_model_summary:
+    default: "display.enable_model_summary"
+  
+  progress_bar_refresh_rate:
+    default: "display.progress_bar_refresh_rate"

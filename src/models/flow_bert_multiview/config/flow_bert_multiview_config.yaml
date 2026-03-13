@@ -1,0 +1,277 @@
+defaults:
+  # 加载数据集的具体配置
+  - datasets: cic_ids_2017 # 可选： cic_ids_2017 | cic_ids_2018 | cic_iomt_2024
+  - _self_
+
+# 调试配置
+debug:
+  debug_mode: true  # 新增：启用调试模式，可以校验数据的nan情况
+
+force_single_gpu: false  # 新增：是否强制使用单GPU进行训练
+
+# 数据配置
+data:
+  dataset: ${datasets.name} # 选择数据集名称
+  # 流数据文件路径
+  flow_data_path: "${datasets.flow_data_path}"
+  batch_size: 32  # ✅ 从32增加到256，甚至512（A800可支持更大，到1024；在2080ti，只能设置到32；）
+  # ✅ 从4增加到8，可以充分利用CPU。如果遇到程序oom报错时，可以适当减少；之前设置12，在易安联公司服务器上遇到如下问题。
+  # 到你现在的问题不是显存不够，而是训练策略过度依赖主内存（很常见于大型序列数据）；
+  # 1024 batch × 12 workers × 512 seq × embedding × graph🔥 最高可达 150GB+ 内存
+  # 我把num_workers从12降低到6，以后就没这个oom的问题了。
+  num_workers: 0
+  random_state: 42
+  max_seq_length: 256  # BERT模型最大token数：期望是既控制sequence特征的长度，也控制文本特征的最大token数量。但是后者很难实现，因为不同文本的token数量差异较大。
+  split_mode: "flow"   # 可选： "session" | "flow"
+
+  # 添加直接针对flow_data_path文件进行随机划分的配置
+  flow_split:
+    train_ratio: 0.8
+    validate_ratio: 0.1
+    test_ratio: 0.1
+
+  # 添加根据session_split_path会话文件，进行flow的训练、验证、测试集合划分配置
+  session_split:
+    # 会话划分文件路径
+    session_split_path: "${datasets.session_split_path}"
+    flow_uid_list_column: "flow_uid_list"  # 包含flow UID列表的列名
+    split_column: "split"  # # session_df中split列的名字
+    train_split: "train"  # session_df中split列的值
+    validate_split: "validate"
+    test_split: "test"
+
+  sampling:
+    enabled: true
+    ## 注意：如果使用了 sampling，且 split_mode 是 "flow"，则 sample_ratio 是针对 flow 的采样率；如果 split_mode 是 "session"，则 sample_ratio 是针对 session 的采样率。
+    ##  例如，cic_ids_2018 中 malicious flow 占比约 1.88%，如果我们设置 sample_ratio=0.02 并且设置downsample_benign_only=true，那么恶意流的占比将提升到约 50%，极大缓解类别不平衡问题。
+    sample_ratio: 0.02   # 只用 20% 的 flow 或者 session，取决于data.split_mode 是 "flow" 还是 "session"
+
+  # 序列特征配置（可选）
+  sequence_features:
+    enabled: true
+    # bulk_first_packet_index_vector: "flowmeter.bulk_first_packet_index_vector"  # 每个 bulk 中第一个数据包在整个流数据包序列中的索引位置
+    bulk_length_vector: "flowmeter.bulk_length_vector"  # 每个 bulk 的长度（即包含的数据包数量）
+    bulk_packet_index: "flowmeter.bulk_packet_index_vector" # 每个数据包所属的 bulk 索引位置
+    packet_direction: "flowmeter.packet_direction_vector" # 数据包方向序列特征
+    packet_iat: "flowmeter.packet_iat_vector" # 数据包到达时间间隔序列特征 
+    packet_timestamp: "flowmeter.packet_timestamp_vector" # 数据包时间戳序列特征
+    packet_payload: "flowmeter.packet_payload_size_vector"  # 数据包载荷长度序列特征
+    mtu_normalize: 1500   # 标准的数据包载荷长度最大MTU，用于 payload 归一化
+    mtu_normalize_enabled: true   # true的时候，用除以mtu_normalize作为消息载荷长度的归一化方法；否则，false的时候，用log算子归一化
+    
+  # 域名嵌入的概率列表特征（可选）
+  domain_name_embedding_features: 
+    enabled: true
+    column_list: [
+      "ssl.server_name0_freq", "ssl.server_name1_freq", "ssl.server_name2_freq", "ssl.server_name3_freq", "ssl.server_name4_freq", 
+      "dns.query0_freq", "dns.query1_freq", "dns.query2_freq", "dns.query3_freq", "dns.query4_freq"
+    ]
+
+  # 文本特征配置（可选）
+  text_features:
+    enabled: true
+    # DNS 字符串语义
+    dns_query: "dns.query"
+    dns_answers: "dns.answers" # Zeek 中通常是 列表类型：包含若干 DNS::Answer 结构，其中包括字符串域名 / IP 地址 / CNAME 链等
+
+    # SSL 字符串语义
+    ssl_server_name: "ssl.server_name"
+
+    # X509 字符串语义
+    cert0_subject: "x509.cert0.certificate.subject"
+    cert0_issuer: "x509.cert0.certificate.issuer"
+    cert0_san_dns: "x509.cert0.san.dns"
+    cert1_subject: "x509.cert1.certificate.subject"
+    cert1_issuer: "x509.cert1.certificate.issuer"
+    cert1_san_dns: "x509.cert1.san.dns"
+    cert2_subject: "x509.cert2.certificate.subject"
+    cert2_issuer: "x509.cert2.certificate.issuer"
+    cert2_san_dns: "x509.cert2.san.dns"
+
+  tabular_features:
+    # 类别型特征配置
+    categorical_features:
+      # DNS类别语义（共7）
+      - dns.proto # DNS 的传输层协议类型："udp" / "tcp"
+      - dns.qtype # DNS 记录类型的 数值编码：1/A, 2/NS, 5/CNAME, 12/PTR, ...
+      - dns.rcode_name
+      - dns.TC 
+      - dns.RD
+      - dns.RA
+      - dns.rejected
+
+      # conn类别语义（共3）
+      - conn.service
+      - conn.proto
+      - conn.history # 建议 top-K=20：会话状态序列，如 ShADd，是短字符序列，但语义离散，适合 categorical 而非 text
+
+      # ssl类别语义（共7）
+      - ssl.cipher # top-K=50：加密套件标识，如 TLS_AES_128_GCM_SHA256
+      - ssl.resumed
+      - ssl.established
+      - ssl.version # top-K=3
+      - ssl.curve
+      - ssl.next_protocol
+      - ssl.sni_matches_cert 
+
+      # x509 类别语义（共3x5=15）
+      - x509.cert0.certificate.key_alg
+      - x509.cert0.certificate.sig_alg
+      - x509.cert0.certificate.key_type
+      - x509.cert0.certificate.version
+      - x509.cert0.basic_constraints.ca
+
+      - x509.cert1.certificate.key_alg
+      - x509.cert1.certificate.sig_alg
+      - x509.cert1.certificate.key_type
+      - x509.cert1.certificate.version
+      - x509.cert1.basic_constraints.ca
+      
+      - x509.cert2.certificate.key_alg
+      - x509.cert2.certificate.sig_alg
+      - x509.cert2.certificate.key_type
+      - x509.cert2.certificate.version
+      - x509.cert2.basic_constraints.ca
+
+    # 数值型特征配置
+    numeric_features:
+      x509_features: [
+        "x509.cert0.certificate.key_length",  # RSA/EC 密钥长度
+        "x509.cert0.certificate.exponent",  # RSA public exponent（常见 65537）
+        "x509.cert1.certificate.key_length",
+        "x509.cert1.certificate.exponent",
+        "x509.cert2.certificate.key_length",
+        "x509.cert2.certificate.exponent",
+      ]
+      dns_features: ["dns.rtt"]
+      # flow级的统计特征（必选）
+      flow_features: [
+        "conn.missed_bytes", # 因为丢包、抓取不足或会话重组失败而未捕获的数据字节数；攻击流量的丢包率通常更高（流控、端口扫描、DoS、C2）
+        "flowmeter.flow_duration", "flowmeter.fwd_pkts_tot", "flowmeter.bwd_pkts_tot",
+        "flowmeter.fwd_data_pkts_tot", "flowmeter.bwd_data_pkts_tot", 
+        "flowmeter.fwd_pkts_per_sec", "flowmeter.bwd_pkts_per_sec", 
+        "flowmeter.flow_pkts_per_sec", "flowmeter.down_up_ratio",
+        "flowmeter.fwd_header_size_tot", "flowmeter.fwd_header_size_min", 
+        "flowmeter.fwd_header_size_max", "flowmeter.bwd_header_size_tot",
+        "flowmeter.bwd_header_size_min", "flowmeter.bwd_header_size_max",
+        "flowmeter.flow_FIN_flag_count", "flowmeter.flow_SYN_flag_count",
+        "flowmeter.flow_RST_flag_count", "flowmeter.fwd_PSH_flag_count",
+        "flowmeter.bwd_PSH_flag_count", "flowmeter.flow_ACK_flag_count",
+        "flowmeter.fwd_URG_flag_count", "flowmeter.bwd_URG_flag_count",
+        "flowmeter.flow_CWR_flag_count", "flowmeter.flow_ECE_flag_count",
+        "flowmeter.fwd_pkts_payload.min", "flowmeter.fwd_pkts_payload.max",
+        "flowmeter.fwd_pkts_payload.tot", "flowmeter.fwd_pkts_payload.avg",
+        "flowmeter.fwd_pkts_payload.std", "flowmeter.bwd_pkts_payload.min",
+        "flowmeter.bwd_pkts_payload.max", "flowmeter.bwd_pkts_payload.tot",
+        "flowmeter.bwd_pkts_payload.avg", "flowmeter.bwd_pkts_payload.std",
+        "flowmeter.flow_pkts_payload.min", "flowmeter.flow_pkts_payload.max",
+        "flowmeter.flow_pkts_payload.tot", "flowmeter.flow_pkts_payload.avg",
+        "flowmeter.flow_pkts_payload.std", "flowmeter.payload_bytes_per_second",
+        "flowmeter.fwd_iat.min", "flowmeter.fwd_iat.max", "flowmeter.fwd_iat.tot",
+        "flowmeter.fwd_iat.avg", "flowmeter.fwd_iat.std", "flowmeter.bwd_iat.min",
+        "flowmeter.bwd_iat.max", "flowmeter.bwd_iat.tot", "flowmeter.bwd_iat.avg",
+        "flowmeter.bwd_iat.std", "flowmeter.flow_iat.min", "flowmeter.flow_iat.max",
+        "flowmeter.flow_iat.tot", "flowmeter.flow_iat.avg", "flowmeter.flow_iat.std", 
+        "flowmeter.fwd_subflow_pkts", "flowmeter.bwd_subflow_pkts",
+        "flowmeter.fwd_subflow_bytes", "flowmeter.bwd_subflow_bytes",
+        "flowmeter.fwd_bulk_bytes", "flowmeter.bwd_bulk_bytes",
+        "flowmeter.fwd_bulk_packets", "flowmeter.bwd_bulk_packets",
+        "flowmeter.fwd_bulk_rate", "flowmeter.bwd_bulk_rate",
+        "flowmeter.num_fwd_bulks", "flowmeter.num_bwd_bulks",
+        "flowmeter.active.min", "flowmeter.active.max", "flowmeter.active.tot",
+        "flowmeter.active.avg", "flowmeter.active.std", "flowmeter.idle.min",
+        "flowmeter.idle.max", "flowmeter.idle.tot", "flowmeter.idle.avg",
+        "flowmeter.idle.std", "flowmeter.fwd_init_window_size",
+        "flowmeter.bwd_init_window_size", "flowmeter.fwd_last_window_size",
+        "flowmeter.bwd_last_window_size"
+      ]
+
+  # 标签列配置
+  is_malicious_column: "is_malicious"  # 二分类：0表示善意，1表示恶意
+  multiclass_label_column: "label"  # 原始标签列，包含多分类标签字符串
+  
+
+# 表示学习的模型配置，分类器的模型配置见 datasets 下各数据集的 yaml 文件
+model:
+  # 处理文本特征的BERT模型配置
+  bert:
+    # 或 "bert_uncased_L-2_H-128_A-2"，“bert_uncased_L-4_H-256_A-4”，或者"bert-base-uncased"
+    # → bert_uncased_L-2_H-128_A-2 是一个 极小的微型 BERT（MiniBERT）
+    # → bert_uncased_L-4_H-256_A-4 比 MiniBERT 强很多，但远比 BERT-base 轻。貌似在Nvidia A800的服务器上报错pytorch版本低。
+    # → bert-base-uncased 是原版标准 BERT。
+    # model_name: "bert-base-uncased"
+    model_name: "bert_uncased_L-2_H-128_A-2"
+    # model_name: "bert_uncased_L-4_H-256_A-4"   #qinyf 11-23  24:55 
+    hidden_dropout_prob: 0.1
+    attention_probs_dropout_prob: 0.1
+
+  # 数据包序列处理配置
+  sequence:
+    embedding_dim: 256  # embedding_dim可以独立于 BERT 的隐藏层大小进行调优
+    num_layers: 4
+    num_heads: 8
+    dropout: 0.1
+
+  # 多视图配置：序列特征 + 文本特征 + 表格特征（域名嵌入特征 + 数值特征），即tabular/sequence/text 三个视图
+  multiview:
+    # 多视图融合方法配置
+    fusion:
+      method: "weighted_sum"  # 可选: "concat"（拼接）, "cross_attention"（交叉注意力）, "weighted_sum"（加权求和）
+      cross_attention_heads: 8
+      cross_attention_dropout: 0.1
+      
+      # 加权求和方法配置
+      weighted_sum:
+        learnable_weights: true  # 是否学习权重
+        initial_weights: [0.33, 0.33, 0.33]  # 初始权重
+
+
+# 训练配置
+training:
+  max_epochs: 40 # 正常训练的时候，可以设置到40；测试test阶段功能的时候，可以设置到1，让训练阶段快速结束
+  precision: "32-true"  # 使用32-true位精度避免兼容性问题，使用16-mixed混合精度可以节省显存并加速训练
+  gradient_clip_val: 1.0  # 添加梯度裁剪
+  gradient_clip_algorithm: "norm"  # 添加这一行，可选值: 'norm' | 'value'  
+  accumulate_grad_batches: 1 # 在A800显卡，max_seq_length直接大batch，无需梯度累积
+  log_every_n_steps: 10
+  strategy: "auto"  # 添加这一行
+  detect_anomaly: false  # 添加这一行
+  
+  model_checkpoint:
+    monitor: "val_is_mal_f1"
+    mode: "max"
+    save_top_k: 3
+    filename: "best-{epoch:02d}-{val_is_mal_f1:.2f}"
+
+  early_stopping:
+    monitor: "val_is_mal_f1"
+    patience: 8
+    mode: "max"
+    min_delta: 0.001    
+
+# 优化器配置
+optimizer:
+  lr: 1e-5  # BERT标准学习率
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  eps: 1e-8
+  default_total_steps: 10000
+
+# 学习率调度器配置
+scheduler:
+  type: "linear"  # linear, cosine, constant
+
+# 日志配置
+logging:
+  save_dir: ${hydra:runtime.cwd}/logs
+  name: "flow_bert_multiview"
+  version: ${now:%Y-%m-%d_%H-%M-%S}
+
+# SHAP模型可解释性分析配置 added by qinyf 11-23 24:55 for shap analysis
+shap:
+  enable_shap: false
+  analysis_frequency: 5  # 每5个epoch分析一次
+  output_dir: "./shap_results"
+  enabled_strategies: ["numeric", "sequence", "text", "categorical"]
+  background_samples: 100  # 背景样本数量
+  max_evals: 500  # 最大评估次数

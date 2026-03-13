@@ -1,0 +1,1044 @@
+{
+  "numeric_features": [
+    {
+      "column_name": "flowmeter.flow_duration",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "流持续时间",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向包总数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向包总数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_data_pkts_tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向数据包总数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_data_pkts_tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向数据包总数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_per_sec",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向包每秒数量",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_per_sec",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向包每秒数量",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_pkts_per_sec",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "流包每秒数量",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.down_up_ratio",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "下行上行比",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_header_size_tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向头大小总和",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_header_size_min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向头大小最小值",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_header_size_max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向头大小最大值",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_header_size_tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向头大小总和",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_header_size_min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向头大小最小值",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_header_size_max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向头大小最大值",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_FIN_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "FIN标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_SYN_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "SYN标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_RST_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "RST标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_PSH_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向PSH标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_PSH_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向PSH标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_ACK_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "ACK标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_URG_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "前向URG标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_URG_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "后向URG标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_CWR_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "CWR标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_ECE_flag_count",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "ECE标志计数",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_payload.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_pkts_payload.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_payload.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_pkts_payload.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_payload.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_pkts_payload.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_payload.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_pkts_payload.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_pkts_payload.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_pkts_payload.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_payload.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_pkts_payload.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_payload.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_pkts_payload.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_payload.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_pkts_payload.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_payload.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_pkts_payload.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_pkts_payload.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_pkts_payload.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_pkts_payload.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_pkts_payload.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_pkts_payload.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_pkts_payload.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_pkts_payload.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_pkts_payload.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_pkts_payload.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_pkts_payload.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_pkts_payload.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_pkts_payload.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.payload_bytes_per_second",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.payload_bytes_per_second",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_iat.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_iat.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_iat.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_iat.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_iat.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_iat.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_iat.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_iat.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_iat.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_iat.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_iat.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_iat.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_iat.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_iat.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_iat.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_iat.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_iat.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_iat.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_iat.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_iat.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_iat.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_iat.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_iat.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_iat.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_iat.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_iat.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_iat.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_iat.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_iat.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_iat.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.flow_iat.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.flow_iat.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_subflow_pkts",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_subflow_pkts",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_subflow_pkts",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_subflow_pkts",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_subflow_bytes",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_subflow_bytes",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_subflow_bytes",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_subflow_bytes",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_bulk_bytes",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_bulk_bytes",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_bulk_bytes",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_bulk_bytes",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_bulk_packets",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_bulk_packets",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_bulk_packets",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_bulk_packets",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_bulk_rate",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_bulk_rate",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_bulk_rate",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_bulk_rate",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.num_fwd_bulks",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.num_fwd_bulks",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.num_bwd_bulks",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.num_bwd_bulks",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.active.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.active.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.active.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.active.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.active.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.active.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.active.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.active.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.active.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.active.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.idle.min",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.idle.min",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.idle.max",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.idle.max",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.idle.tot",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.idle.tot",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.idle.avg",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.idle.avg",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.idle.std",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.idle.std",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_init_window_size",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_init_window_size",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_init_window_size",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_init_window_size",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.fwd_last_window_size",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.fwd_last_window_size",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "flowmeter.bwd_last_window_size",
+      "config_path": "data.numeric_features.flow_features",
+      "description": "Flow统计特征: flowmeter.bwd_last_window_size",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "ssl.server_name0_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: ssl.server_name0_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "ssl.server_name1_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: ssl.server_name1_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "ssl.server_name2_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: ssl.server_name2_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "ssl.server_name3_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: ssl.server_name3_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "ssl.server_name4_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: ssl.server_name4_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "dns.query0_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: dns.query0_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "dns.query1_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: dns.query1_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "dns.query2_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: dns.query2_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "dns.query3_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: dns.query3_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    },
+    {
+      "column_name": "dns.query4_freq",
+      "config_path": "data.domain_name_embedding_features.column_list",
+      "description": "域名频率统计特征: dns.query4_freq",
+      "analysis_metrics": [
+        "variance_importance",
+        "range_importance",
+        "entropy_importance"
+      ]
+    }
+  ],
+  "sequence_features": [
+    {
+      "column_name": "iat_times",
+      "config_path": "data.sequence_features.packet_iat",
+      "description": "包间到达时间序列",
+      "original_column": "flowmeter.packet_iat_vector",
+      "analysis_metrics": [
+        "temporal_variance",
+        "pattern_complexity",
+        "entropy_importance",
+        "autocorrelation"
+      ]
+    },
+    {
+      "column_name": "payload_sizes",
+      "config_path": "data.sequence_features.packet_payload",
+      "description": "包载荷大小序列",
+      "original_column": "flowmeter.packet_payload_size_vector",
+      "analysis_metrics": [
+        "temporal_variance",
+        "pattern_complexity",
+        "entropy_importance",
+        "autocorrelation"
+      ]
+    }
+  ],
+  "text_features": [
+    {
+      "column_name": "ssl_server_name",
+      "config_path": "data.text_features.ssl_server_name",
+      "description": "SSL服务器名称",
+      "original_column": "ssl.server_name",
+      "analysis_metrics": [
+        "length_importance",
+        "richness_importance",
+        "diversity_importance"
+      ]
+    },
+    {
+      "column_name": "dns_query",
+      "config_path": "data.text_features.dns_query",
+      "description": "DNS查询域名",
+      "original_column": "dns.query",
+      "analysis_metrics": [
+        "length_importance",
+        "richness_importance",
+        "diversity_importance"
+      ]
+    },
+    {
+      "column_name": "cert0_subject",
+      "config_path": "data.text_features.cert0_subject",
+      "description": "证书主题信息",
+      "original_column": "x509.cert0.certificate.subject",
+      "analysis_metrics": [
+        "length_importance",
+        "richness_importance",
+        "diversity_importance"
+      ]
+    },
+    {
+      "column_name": "cert0_issuer",
+      "config_path": "data.text_features.cert0_issuer",
+      "description": "证书颁发者信息",
+      "original_column": "x509.cert0.certificate.issuer",
+      "analysis_metrics": [
+        "length_importance",
+        "richness_importance",
+        "diversity_importance"
+      ]
+    }
+  ],
+  "categorical_features": [
+    {
+      "column_name": "idx",
+      "config_path": "(auto-detected)",
+      "description": "样本索引",
+      "analysis_metrics": [
+        "entropy_importance",
+        "balance_importance",
+        "diversity_importance"
+      ]
+    }
+  ],
+  "excluded_features": [
+    {
+      "column_name": "sequence_mask",
+      "config_path": "(auto-detected)",
+      "description": "序列掩码，非特征",
+      "analysis_metrics": null
+    },
+    {
+      "column_name": "is_malicious_labels",
+      "config_path": "data.target_column",
+      "description": "恶意标签，目标变量",
+      "analysis_metrics": null
+    },
+    {
+      "column_name": "is_malicious",
+      "config_path": "data.target_column",
+      "description": "恶意标签，目标变量",
+      "analysis_metrics": null
+    },
+    {
+      "column_name": "uid",
+      "config_path": "(auto-detected)",
+      "description": "样本ID，非特征",
+      "analysis_metrics": null
+    }
+  ]
+}
